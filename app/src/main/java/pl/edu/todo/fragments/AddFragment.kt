@@ -33,10 +33,10 @@ class AddFragment : Fragment(), Navigable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.datePickerBtn.setOnClickListener {
-            DatePickerFragment(binding.dateField).show(
+        binding.dateField.setOnClickListener {
+            DatePickerDialog(binding.dateField).show(
                 requireActivity().supportFragmentManager,
-                DatePickerFragment::class.java.name
+                DatePickerDialog::class.java.name
             )
         }
 
