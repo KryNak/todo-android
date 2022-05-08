@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import pl.edu.todo.Navigable
+import pl.edu.todo.R
 import pl.edu.todo.adapters.TodosAdapter
 import pl.edu.todo.data.DataSource
 import pl.edu.todo.data.TaskCounter
 import pl.edu.todo.databinding.FragmentListBinding
+import pl.edu.todo.enums.FormType
 import pl.edu.todo.enums.NavigationOptions
-import pl.edu.todo.enums.TransactionOperation
 import pl.edu.todo.utils.TodoDeadlineChecker
 
 class ListFragment : Fragment(), Navigable {
@@ -47,19 +47,24 @@ class ListFragment : Fragment(), Navigable {
         }
 
         binding.btnAdd.setOnClickListener {
-            navigate(NavigationOptions.ADD_FRAGMENT)
+            navigate(NavigationOptions.FORM_FRAGMENT)
         }
     }
 
-    override fun provideActivityContext(): FragmentActivity {
-        return requireActivity()
-    }
+    override fun navigate(to: NavigationOptions) {
+        when(to) {
+            NavigationOptions.FORM_FRAGMENT -> {
+                val fragment = FormFragment(FormType.ADD_FORM)
 
-    override fun shouldAddToBackStack(): Boolean {
-        return true
-    }
-
-    override fun chooseOperation(): TransactionOperation {
-        return TransactionOperation.REPLACE
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, fragment, fragment.javaClass.name)
+                    .addToBackStack(fragment.javaClass.name)
+                    .commit()
+            }
+            else -> {
+                throw UnsupportedOperationException()
+            }
+        }
     }
 }

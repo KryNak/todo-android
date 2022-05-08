@@ -2,10 +2,9 @@ package pl.edu.todo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import pl.edu.todo.databinding.ActivityMainBinding
 import pl.edu.todo.enums.NavigationOptions
-import pl.edu.todo.enums.TransactionOperation
+import pl.edu.todo.fragments.ListFragment
 
 class MainActivity : AppCompatActivity(), Navigable {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,15 +16,21 @@ class MainActivity : AppCompatActivity(), Navigable {
         navigate(NavigationOptions.LIST_FRAGMENT)
     }
 
-    override fun provideActivityContext(): FragmentActivity {
-        return this
+    override fun navigate(to: NavigationOptions) {
+        when(to) {
+            NavigationOptions.LIST_FRAGMENT -> {
+                val fragment = ListFragment()
+
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.container, fragment, fragment.javaClass.name)
+                    .commit()
+            }
+            else -> {
+                throw UnsupportedOperationException()
+            }
+        }
     }
 
-    override fun chooseOperation(): TransactionOperation {
-        return TransactionOperation.ADD
-    }
 
-    override fun shouldAddToBackStack(): Boolean {
-        return false
-    }
 }

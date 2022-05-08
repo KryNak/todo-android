@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import pl.edu.todo.Navigable
+import pl.edu.todo.R
 import pl.edu.todo.adapters.TodosAdapter
 import pl.edu.todo.data.DataSource
 import pl.edu.todo.databinding.FragmentPreviewBinding
+import pl.edu.todo.enums.FormType
+import pl.edu.todo.enums.NavigationOptions
 import pl.edu.todo.listeners.OnPreviewProgressChangeListener
 import pl.edu.todo.model.Todo
 import java.time.format.DateTimeFormatter
@@ -15,7 +19,7 @@ import java.time.format.DateTimeFormatter
 
 class PreviewFragment(
     val todo: Todo
-) : DialogFragment() {
+) : DialogFragment(), Navigable {
 
     lateinit var binding: FragmentPreviewBinding
 
@@ -55,6 +59,27 @@ class PreviewFragment(
             dismiss()
         }
 
+        binding.editBtn.setOnClickListener {
+            navigate(NavigationOptions.FORM_FRAGMENT)
+        }
+
+    }
+
+    override fun navigate(to: NavigationOptions) {
+        when(to) {
+            NavigationOptions.FORM_FRAGMENT -> {
+                dismiss()
+                val fragment = FormFragment(FormType.EDIT_FORM, todo)
+
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, fragment, fragment.javaClass.name)
+                    .commit()
+            }
+            else -> {
+                throw UnsupportedOperationException()
+            }
+        }
     }
 
 }

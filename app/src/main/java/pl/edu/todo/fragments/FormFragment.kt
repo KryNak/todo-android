@@ -8,22 +8,26 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import pl.edu.todo.Navigable
+import pl.edu.todo.R
 import pl.edu.todo.data.DataSource
 import pl.edu.todo.databinding.FragmentAddBinding
+import pl.edu.todo.enums.FormType
 import pl.edu.todo.enums.NavigationOptions
 import pl.edu.todo.enums.Priority
-import pl.edu.todo.enums.TransactionOperation
 import pl.edu.todo.listeners.OnAddProgressChangeListener
 import pl.edu.todo.model.Todo
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-class AddFragment : Fragment(), Navigable {
+class FormFragment(
+    private val formType: FormType,
+    private val todo: Todo? = null
+) : Fragment(), Navigable {
 
     private lateinit var binding: FragmentAddBinding
+    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +42,20 @@ class AddFragment : Fragment(), Navigable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(formType == FormType.EDIT_FORM){
+
+            binding.taskDesc.setText(todo!!.taskName)
+            binding.dateField.setText(formatter.format(todo.deadline))
+            binding.proritiesList.setSelection(todo.priority.order % 2)
+            binding.progressBar.progress = todo.progress
+            binding.progressText.text = todo.progress.toString()
+
+            binding.btn.text = "Edit"
+
+        }
+
         binding.dateField.setOnClickListener {
-            val view: View? = this.requireActivity().currentFocus
-            if (view != null) {
+            this.requireActivity().currentFocus?.let {
                 val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
                 imm!!.hideSoftInputFromWindow(view.windowToken, 0)
             }
@@ -54,7 +69,7 @@ class AddFragment : Fragment(), Navigable {
         }
 
         binding.progressBar.setOnSeekBarChangeListener(OnAddProgressChangeListener(binding.progressText))
-        binding.addBtn.setOnClickListener {
+        binding.btn.setOnClickListener {
             if(isFormValid(binding)){
 
                 val taskName = binding.taskDesc.text.toString()
@@ -63,10 +78,10 @@ class AddFragment : Fragment(), Navigable {
 
                 val progress = binding.progressBar.progress
 
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
                 val date = LocalDateTime.parse(binding.dateField.text.toString(), formatter)
 
-                DataSource.todos.add(Todo(taskName, priority, progress, date))
+
+                save(Todo(taskName, priority, progress, date))
                 navigate(NavigationOptions.LIST_FRAGMENT)
             }
             else {
@@ -79,17 +94,38 @@ class AddFragment : Fragment(), Navigable {
         }
     }
 
-    override fun provideActivityContext(): FragmentActivity {
-        return requireActivity()
-    }
+    override fun navigate(to: NavigationOptions) {
+        when(to) {
+            NavigationOptions.LIST_FRAGMENT -> {
+                val fragment = ListFragment()
 
-    override fun chooseOperation(): TransactionOperation {
-        return TransactionOperation.REPLACE
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, fragment, fragment.javaClass.name)
+                    .commit()
+            }
+            else -> {
+                throw UnsupportedOperationException()
+            }
+        }
     }
 
     private fun isFormValid(binding: FragmentAddBinding): Boolean {
         return binding.dateField.text.isNotBlank()
                 && binding.taskDesc.text.isNotBlank()
+    }
+
+
+    private fun save(newTodo: Todo) {
+        when(formType) {
+            FormType.EDIT_FORM -> {
+                val index = DataSource.todos.indexOf(todo)
+                DataSource.todos[index] = newTodo
+            }
+            FormType.ADD_FORM -> {
+                DataSource.todos.add(newTodo)
+            }
+        }
     }
 
 }
