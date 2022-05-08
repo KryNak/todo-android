@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import pl.edu.todo.Navigable
@@ -15,6 +16,7 @@ import pl.edu.todo.enums.TransactionOperation
 import pl.edu.todo.listeners.OnSeekChangeListener
 import pl.edu.todo.model.Todo
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AddFragment : Fragment(), Navigable {
 
@@ -42,16 +44,27 @@ class AddFragment : Fragment(), Navigable {
 
         binding.progressBar.setOnSeekBarChangeListener(OnSeekChangeListener(binding.progressText))
         binding.addBtn.setOnClickListener {
-            DataSource.todos.add(
-                Todo(
-                    taskName = binding.taskDesc.text.toString(),
-                    progress = binding.progressBar.progress,
-                    priority = Priority.valueOf(binding.proritiesList.selectedItem.toString().uppercase()),
-                    deadline = LocalDateTime.parse(binding.dateField.text.toString())
-                )
-            )
+            if(isFormValid(binding)){
 
-            navigate(NavigationOptions.LIST_FRAGMENT)
+                val taskName = binding.taskDesc.text.toString()
+
+                val priority = Priority.valueOf(binding.proritiesList.selectedItem.toString().uppercase())
+
+                val progress = binding.progressBar.progress
+
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                val date = LocalDateTime.parse(binding.dateField.text.toString(), formatter)
+
+                DataSource.todos.add(Todo(taskName, priority, progress, date))
+                navigate(NavigationOptions.LIST_FRAGMENT)
+            }
+            else {
+                Toast.makeText(
+                    requireContext(),
+                    "All text fields should be filled!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -61,6 +74,11 @@ class AddFragment : Fragment(), Navigable {
 
     override fun chooseOperation(): TransactionOperation {
         return TransactionOperation.REPLACE
+    }
+
+    private fun isFormValid(binding: FragmentAddBinding): Boolean {
+        return binding.dateField.text.isNotBlank()
+                && binding.taskDesc.text.isNotBlank()
     }
 
 }

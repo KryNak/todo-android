@@ -7,7 +7,6 @@ import android.widget.DatePicker
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class DatePickerDialog(var dateField: EditText): DialogFragment(), DatePickerDialog.OnDateSetListener {
 
@@ -18,10 +17,8 @@ class DatePickerDialog(var dateField: EditText): DialogFragment(), DatePickerDia
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
         val date = LocalDate.of(year, month + 1, day)
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-        //dateField.setText(formatter.format(date))
-        TimePickerDialog(dateField).show(
+        TimePickerDialog(dateField, date).show(
             requireActivity().supportFragmentManager,
             TimePickerDialog::class.java.name
         )
