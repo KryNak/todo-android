@@ -3,110 +3,167 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".PreviewFragment">
+    android:layout_height="wrap_content"
+    tools:context=".fragments.PreviewFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/deadlineField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:clickable="false"
-            android:contextClickable="false"
-            android:editable="false"
-            android:ems="10"
-            android:enabled="true"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:inputType="none"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/progressField"
-            app:layout_constraintStart_toStartOf="@+id/progressField"
-            app:layout_constraintTop_toBottomOf="@+id/progressField" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/priorityField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:ems="10"
-            android:enabled="true"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:inputType="none"
-            app:layout_constraintBottom_toTopOf="@+id/progressField"
-            app:layout_constraintEnd_toEndOf="@+id/taskNameField"
-            app:layout_constraintStart_toStartOf="@+id/taskNameField"
-            app:layout_constraintTop_toBottomOf="@+id/taskNameField" />
+            <EditText
+                android:id="@+id/deadlineField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="false"
+                android:contextClickable="false"
+                android:ems="10"
+                android:enabled="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="none"
+                app:layout_constraintEnd_toEndOf="@+id/priorityField"
+                app:layout_constraintStart_toStartOf="@+id/priorityField"
+                app:layout_constraintTop_toBottomOf="@+id/priorityField" />
 
-        <EditText
-            android:id="@+id/progressField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:ems="10"
-            android:enabled="true"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:inputType="none"
-            app:layout_constraintBottom_toTopOf="@+id/deadlineField"
-            app:layout_constraintEnd_toEndOf="@+id/priorityField"
-            app:layout_constraintStart_toStartOf="@+id/priorityField"
-            app:layout_constraintTop_toBottomOf="@+id/priorityField" />
+            <EditText
+                android:id="@+id/priorityField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:editable="false"
+                android:ems="10"
+                android:enabled="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="none"
+                app:layout_constraintEnd_toEndOf="@+id/taskNameField"
+                app:layout_constraintStart_toStartOf="@+id/taskNameField"
+                app:layout_constraintTop_toBottomOf="@+id/taskNameField" />
 
-        <EditText
-            android:id="@+id/taskNameField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:editable="false"
-            android:ems="10"
-            android:enabled="true"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:inputType="none"
-            app:layout_constraintBottom_toTopOf="@+id/priorityField"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/taskNameLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:id="@+id/taskNameField"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:enabled="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="none"
+                app:layout_constraintBottom_toTopOf="@+id/priorityField"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/taskNameLabel"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/taskNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Task Name"
-            app:layout_constraintBaseline_toBaselineOf="@+id/taskNameField"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/taskNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Task Name"
+                app:layout_constraintBaseline_toBaselineOf="@+id/taskNameField"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/priorityLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Priority"
-            app:layout_constraintBaseline_toBaselineOf="@+id/priorityField"
-            app:layout_constraintStart_toStartOf="@+id/taskNameLabel" />
+            <TextView
+                android:id="@+id/priorityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Priority"
+                app:layout_constraintBaseline_toBaselineOf="@+id/priorityField"
+                app:layout_constraintStart_toStartOf="@+id/taskNameLabel" />
 
-        <TextView
-            android:id="@+id/progressLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Progress"
-            app:layout_constraintBaseline_toBaselineOf="@+id/progressField"
-            app:layout_constraintStart_toStartOf="@+id/priorityLabel" />
+            <TextView
+                android:id="@+id/progressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Progress"
+                app:layout_constraintStart_toStartOf="@+id/deadlineLabel"
+                app:layout_constraintTop_toBottomOf="@+id/deadlineField" />
 
-        <TextView
-            android:id="@+id/deadlineLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Deadline"
-            app:layout_constraintBaseline_toBaselineOf="@+id/deadlineField"
-            app:layout_constraintStart_toStartOf="@+id/progressLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/deadlineLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deadline"
+                app:layout_constraintBaseline_toBaselineOf="@+id/deadlineField"
+                app:layout_constraintStart_toStartOf="@+id/priorityLabel" />
+
+            <SeekBar
+                android:id="@+id/progressField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressLabel" />
+
+            <ProgressBar
+                android:id="@+id/backgroundProgressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="209dp"
+                android:layout_height="199dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/stats_full"
+                app:layout_constraintBottom_toBottomOf="@+id/statsProgressbar"
+                app:layout_constraintEnd_toEndOf="@+id/statsProgressbar"
+                app:layout_constraintStart_toStartOf="@+id/statsProgressbar"
+                app:layout_constraintTop_toTopOf="@+id/statsProgressbar"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <ProgressBar
+                android:id="@+id/statsProgressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="209dp"
+                android:layout_height="199dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="21"
+                android:progressDrawable="@drawable/stats_progress"
+                app:layout_constraintBottom_toTopOf="@+id/editBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressField" />
+
+            <Button
+                android:id="@+id/editBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="Save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editBtn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </FrameLayout>

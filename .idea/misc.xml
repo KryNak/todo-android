@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/drawable/add_vec.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/avatar.xml" value="0.2085" />
+        <entry key="app/src/main/res/drawable/stats_full.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/stats_progress.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_add.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_list.xml" value="0.3098958333333333" />

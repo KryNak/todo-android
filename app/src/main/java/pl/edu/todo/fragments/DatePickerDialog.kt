@@ -12,7 +12,7 @@ class DatePickerDialog(var dateField: EditText): DialogFragment(), DatePickerDia
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val now = LocalDate.now()
-        return DatePickerDialog(requireContext(), this, now.year, now.monthValue, now.dayOfMonth)
+        return DatePickerDialog(requireContext(), this, now.year, now.monthValue - 1, now.dayOfMonth)
     }
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {

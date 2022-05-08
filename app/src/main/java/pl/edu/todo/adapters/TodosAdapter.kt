@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import pl.edu.todo.PreviewFragment
+import pl.edu.todo.fragments.PreviewFragment
 import pl.edu.todo.databinding.ListItemBinding
 import pl.edu.todo.fragments.DeleteDialogFragment
 import pl.edu.todo.model.Todo
@@ -53,7 +53,7 @@ class TodoClassHolder(
         }
 
         binding.cardComponent.setOnClickListener {
-            PreviewFragment().show(
+            PreviewFragment(todo).show(
                 activity.supportFragmentManager,
                 PreviewFragment::class.java.name
             )
