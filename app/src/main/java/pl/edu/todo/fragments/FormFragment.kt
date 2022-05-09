@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import pl.edu.todo.Navigable
-import pl.edu.todo.R
+import pl.edu.todo.MainActivity
 import pl.edu.todo.data.DataSource
 import pl.edu.todo.databinding.FragmentAddBinding
 import pl.edu.todo.enums.FormType
@@ -24,7 +23,7 @@ import java.time.format.DateTimeFormatter
 class FormFragment(
     private val formType: FormType,
     private val todo: Todo? = null
-) : Fragment(), Navigable {
+) : Fragment() {
 
     private lateinit var binding: FragmentAddBinding
     private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -81,8 +80,8 @@ class FormFragment(
                 val date = LocalDateTime.parse(binding.dateField.text.toString(), formatter)
 
 
-                save(Todo(taskName, priority, progress, date))
-                navigate(NavigationOptions.LIST_FRAGMENT)
+                saveInDatasource(Todo(taskName, priority, progress, date))
+                (requireActivity() as? MainActivity)?.navigate(NavigationOptions.LIST_FRAGMENT)
             }
             else {
                 Toast.makeText(
@@ -94,29 +93,13 @@ class FormFragment(
         }
     }
 
-    override fun navigate(to: NavigationOptions) {
-        when(to) {
-            NavigationOptions.LIST_FRAGMENT -> {
-                val fragment = ListFragment()
-
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, fragment, fragment.javaClass.name)
-                    .commit()
-            }
-            else -> {
-                throw UnsupportedOperationException()
-            }
-        }
-    }
-
     private fun isFormValid(binding: FragmentAddBinding): Boolean {
         return binding.dateField.text.isNotBlank()
                 && binding.taskDesc.text.isNotBlank()
     }
 
 
-    private fun save(newTodo: Todo) {
+    private fun saveInDatasource(newTodo: Todo) {
         when(formType) {
             FormType.EDIT_FORM -> {
                 val index = DataSource.todos.indexOf(todo)
