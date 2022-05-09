@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import pl.edu.todo.Navigable
-import pl.edu.todo.R
+import pl.edu.todo.MainActivity
 import pl.edu.todo.adapters.TodosAdapter
 import pl.edu.todo.data.DataSource
 import pl.edu.todo.data.TaskCounter
 import pl.edu.todo.databinding.FragmentListBinding
-import pl.edu.todo.enums.FormType
 import pl.edu.todo.enums.NavigationOptions
 import pl.edu.todo.utils.TodoDeadlineChecker
 
-class ListFragment : Fragment(), Navigable {
+class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
 
@@ -47,24 +45,8 @@ class ListFragment : Fragment(), Navigable {
         }
 
         binding.btnAdd.setOnClickListener {
-            navigate(NavigationOptions.FORM_FRAGMENT)
+            (requireActivity() as? MainActivity)?.navigate(NavigationOptions.ADD_FRAGMENT)
         }
     }
 
-    override fun navigate(to: NavigationOptions) {
-        when(to) {
-            NavigationOptions.FORM_FRAGMENT -> {
-                val fragment = FormFragment(FormType.ADD_FORM)
-
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, fragment, fragment.javaClass.name)
-                    .addToBackStack(fragment.javaClass.name)
-                    .commit()
-            }
-            else -> {
-                throw UnsupportedOperationException()
-            }
-        }
-    }
 }
